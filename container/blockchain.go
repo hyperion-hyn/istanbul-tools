@@ -88,8 +88,8 @@ func NewBlockchain(network *DockerNetwork, numOfValidators int, options ...Optio
 func NewDefaultBlockchain(network *DockerNetwork, numOfValidators int) (bc *blockchain) {
 	return NewBlockchain(network,
 		numOfValidators,
-		ImageRepository("quay.io/amis/geth"),
-		ImageTag("istanbul_develop"),
+		ImageRepository(service.AtlasDockerImage),
+		ImageTag(service.AtlasDockerImageTag),
 		DataDir("/data"),
 		WebSocket(),
 		WebSocketAddress("0.0.0.0"),
@@ -104,6 +104,9 @@ func NewDefaultBlockchain(network *DockerNetwork, numOfValidators int) (bc *bloc
 		Password("password.txt"),
 		Logging(false),
 		Verbosity(5),
+		NetworkID(ArbitraryNetworkId),
+		NoUSB(),
+		InsecureUnlockAllowed(),
 	)
 }
 
@@ -133,7 +136,7 @@ func NewDefaultBlockchainWithFaulty(network *DockerNetwork, numOfNormal int, num
 	}
 	normalOpts := make([]Option, len(commonOpts), len(commonOpts)+2)
 	copy(normalOpts, commonOpts[:])
-	normalOpts = append(normalOpts, ImageRepository("quay.io/amis/geth"), ImageTag("istanbul_develop"))
+	normalOpts = append(normalOpts, ImageRepository(service.AtlasDockerImage), ImageTag(service.AtlasDockerImageTag))
 	faultyOpts := make([]Option, len(commonOpts), len(commonOpts)+3)
 	copy(faultyOpts, commonOpts[:])
 	faultyOpts = append(faultyOpts, ImageRepository("quay.io/amis/geth_faulty"), ImageTag("latest"), FaultyMode(1))

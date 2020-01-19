@@ -27,7 +27,7 @@ import (
 	"github.com/jpmorganchase/istanbul-tools/tests"
 )
 
-var _ = Describe("TFS-05: Byzantine Faulty", func() {
+var _ = PDescribe("TFS-05: Byzantine Faulty", func() {
 
 	Context("TFS-05-01: F faulty validators", func() {
 		const (

@@ -23,6 +23,8 @@ import (
 )
 
 var (
+	AtlasDockerImage    = "hyperion/atlas"
+	AtlasDockerImageTag = "latest"
 	QuorumDockerImage    = "quorumengineering/quorum"
 	QuorumDockerImageTag = "2.4.0"
 )

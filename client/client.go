@@ -107,7 +107,7 @@ func (ic *client) StartMining(ctx context.Context) error {
 }
 
 func (ic *client) StopMining(ctx context.Context) error {
-	err := ic.c.CallContext(ctx, nil, "miner_stop", nil)
+	err := ic.c.CallContext(ctx, nil, "miner_stop")
 	if err != nil {
 		return err
 	}

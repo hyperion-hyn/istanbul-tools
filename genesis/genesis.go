@@ -51,7 +51,6 @@ func New(options ...Option) *core.Genesis {
 			EIP150Block:          big.NewInt(0),
 			EIP155Block:          big.NewInt(0),
 			EIP158Block:          big.NewInt(0),
-			TransactionSizeLimit: 64,
 			Istanbul: &params.IstanbulConfig{
 				ProposerPolicy: uint64(istanbul.DefaultConfig.ProposerPolicy),
 				Epoch:          istanbul.DefaultConfig.Epoch,
@@ -89,7 +88,7 @@ func Save(dataDir string, genesis *core.Genesis, isQuorum bool) error {
 
 	var raw []byte
 	var err error
-	if isQuorum {
+	if isQuorum {		// TODO: BUG?
 		raw, err = json.Marshal(ToQuorum(genesis, true))
 	} else {
 		raw, err = json.Marshal(genesis)

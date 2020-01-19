@@ -116,9 +116,7 @@ func Key(key *ecdsa.PrivateKey) Option {
 
 func DataDir(dir string) Option {
 	return func(eth *ethereum) {
-		utils.DataDirFlag.Value = utils.DirectoryString{
-			Value: dir,
-		}
+		utils.DataDirFlag.Value = utils.DirectoryString(dir)
 		eth.flags = append(eth.flags, "--"+utils.DataDirFlag.Name)
 		eth.flags = append(eth.flags, dir)
 
@@ -310,6 +308,12 @@ func Password(password string) Option {
 	return func(eth *ethereum) {
 		eth.password = password
 		eth.flags = append(eth.flags, "--"+utils.PasswordFileFlag.Name)
-		eth.flags = append(eth.flags, filepath.Join(utils.DataDirFlag.Value.Value, password))
+		eth.flags = append(eth.flags, filepath.Join(utils.DataDirFlag.Value.String(), password))
+	}
+}
+
+func InsecureUnlockAllowed() Option {
+	return func(eth *ethereum) {
+		eth.flags = append(eth.flags, "--"+utils.InsecureUnlockAllowedFlag.Name)
 	}
 }

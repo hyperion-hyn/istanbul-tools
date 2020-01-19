@@ -33,3 +33,5 @@ profile.cov
 
 # vscode
 .vscode/
+
+.idea

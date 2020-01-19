@@ -18,6 +18,7 @@ package functional
 
 import (
 	"context"
+	"github.com/jpmorganchase/istanbul-tools/docker/service"
 	"math/big"
 	"sync"
 
@@ -57,14 +58,17 @@ var _ = Describe("Block synchronization testing", func() {
 			Expect(ok).To(BeTrue())
 
 			nodes, err = incubator.CreateNodes(numberOfNodes,
-				container.ImageRepository("quay.io/amis/geth"),
-				container.ImageTag("istanbul_develop"),
+				container.ImageRepository(service.AtlasDockerImage),
+				container.ImageTag(service.AtlasDockerImageTag),
 				container.DataDir("/data"),
 				container.WebSocket(),
 				container.WebSocketAddress("0.0.0.0"),
 				container.WebSocketAPI("admin,eth,net,web3,personal,miner"),
 				container.WebSocketOrigin("*"),
 				container.NAT("any"),
+				container.NetworkID(container.ArbitraryNetworkId),
+				container.NoUSB(),
+				container.InsecureUnlockAllowed(),
 			)
 
 			Expect(err).To(BeNil())

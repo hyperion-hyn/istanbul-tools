@@ -144,7 +144,7 @@ var _ = Describe("QFS-01: General consensus", func() {
 			for _, geth := range blockchain.Validators() {
 				go func(geth container.Ethereum) {
 					c := geth.NewClient()
-					lastBlockTime := int64(0)
+					lastBlockTime := uint64(0)
 					// The reason to verify block period from block#2 is that
 					// the block period from block#1 to block#2 might take long time due to
 					// encounter several round changes at the beginning of the consensus progress.
@@ -155,14 +155,14 @@ var _ = Describe("QFS-01: General consensus", func() {
 							return
 						}
 						if lastBlockTime != 0 {
-							diff := header.Time.Int64() - lastBlockTime
+							diff := header.Time - lastBlockTime
 							if diff > maxBlockPeriod {
 								errStr := fmt.Sprintf("Invaild block(%v) period, want:%v, got:%v", header.Number.Int64(), maxBlockPeriod, diff)
 								errc <- errors.New(errStr)
 								return
 							}
 						}
-						lastBlockTime = header.Time.Int64()
+						lastBlockTime = header.Time
 					}
 					errc <- nil
 				}(geth)

@@ -160,7 +160,7 @@ func (eth *ethereum) Init(genesisFile string) error {
 		genesisFile + ":" + filepath.Join("/", genesis.FileName),
 	}
 	if eth.dataDir != "" {
-		binds = append(binds, eth.dataDir+":"+utils.DataDirFlag.Value.Value)
+		binds = append(binds, eth.dataDir+":"+utils.DataDirFlag.Value.String())
 	}
 
 	resp, err := eth.dockerClient.ContainerCreate(context.Background(),
@@ -169,7 +169,7 @@ func (eth *ethereum) Init(genesisFile string) error {
 			Cmd: []string{
 				"init",
 				"--" + utils.DataDirFlag.Name,
-				utils.DataDirFlag.Value.Value,
+				utils.DataDirFlag.Value.String(),
 				filepath.Join("/", genesis.FileName),
 			},
 		},
@@ -236,7 +236,7 @@ func (eth *ethereum) Start() error {
 	binds := []string{}
 	binds = append(binds, eth.dockerBinds...)
 	if eth.dataDir != "" {
-		binds = append(binds, eth.dataDir+":"+utils.DataDirFlag.Value.Value)
+		binds = append(binds, eth.dataDir+":"+utils.DataDirFlag.Value.String())
 	}
 
 	var networkingConfig *network.NetworkingConfig
